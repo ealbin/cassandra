@@ -1,0 +1,31 @@
+1) Git clone this repository, and 
+   cd into the directory with "Dockerfile":
+
+    git clone https://github.com/ealbin/Docker_Cassandra.git
+    (data is no longer included, run/edit fetchdata.sh)
+
+2) Install Docker:
+
+    http://www.docker.com
+
+3) Make a Cassandra Cluster:
+
+    docker run --rm --name crayvault -d cassandra:latest
+    (for reference: http://hub.docker.com/_/cassandra )
+    
+4) Build Dockerfile:
+    
+    docker build -t ubuntu:daq .
+    
+5) Boot up an instance:
+
+    docker run --rm --name craydata --link crayvault:cassandra -it ubuntu:daq    
+
+6) Run the test load:
+    
+    ipython test.py
+    (in the working directory: /home/src)
+
+7) Talk to the Cassandra container, or whatever
+
+    docker run --it --link crayvault:cassandra --rm cassandra cqlsh cassandra

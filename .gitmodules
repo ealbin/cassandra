@@ -1,0 +1,3 @@
+[submodule "src/ingest"]
+	path = src/ingest
+	url = https://github.com/ealbin/ingest.git
