@@ -22,7 +22,7 @@ RUN pip install protobuf
 
 # mimick craydata.ps.uci.edu
 #---------------------------------------------------
-COPY ./craydata/ /
+COPY ./data/ /data/
 
 # load ingest module
 #---------------------------------------------------
