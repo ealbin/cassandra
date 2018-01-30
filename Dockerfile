@@ -29,9 +29,3 @@ COPY ./data/ /data/
 RUN mkdir /home/src
 WORKDIR /home/src
 COPY ./src /home/src
-
-# add back symbolic links docker drops
-#---------------------------------------------------
-RUN cd /home/src/ingest/Cassandra/raw_keyspace && ln -s ../writer .
-RUN cd /home/src/ingest/CrayonMessage && ln -s ../crayfis_data_pb2.py .
-RUN cd /home/src/ingest/CrayonMessage/DataChunk && ln -s ../../crayfis_data_pb2.py .
