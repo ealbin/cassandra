@@ -10,7 +10,9 @@
 
 3) Make a Cassandra Cluster:
 
-    docker run --rm --name crayvault -d cassandra:latest
+    make a directory for your data, e.g. /data/directory
+    then,
+    docker run --name crayvault -v /data/directory:/var/lib/cassandra -d cassandra:latest
     (for reference: http://hub.docker.com/_/cassandra )
     
 4) Build Dockerfile:
