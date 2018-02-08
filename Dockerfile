@@ -20,12 +20,8 @@ RUN pip install --upgrade pip
 RUN pip install cassandra-driver
 RUN pip install protobuf
 
-# mimick craydata.ps.uci.edu
-#---------------------------------------------------
-COPY ./data/ /data/
 
-# load ingest module
+# set up working directory
 #---------------------------------------------------
-RUN mkdir /home/src
-WORKDIR /home/src
-COPY ./src /home/src
+RUN mkdir /home/craydata
+WORKDIR /home/craydata
