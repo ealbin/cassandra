@@ -7,9 +7,11 @@
 
     http://www.docker.com
 
-3) Use bin/cmd.sh as needed
+3a) Use bin/cmd.sh as needed (e.g. boot up/update cassandra)
 
     bash bin/cmd.sh
+
+3b) Or use the src/ingest python module directly 
     
 
 
