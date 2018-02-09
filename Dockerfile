@@ -1,3 +1,5 @@
+# Not neccissary if working from craydata
+
 FROM ubuntu:xenial
 
 # core software
