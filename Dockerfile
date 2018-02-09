@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     git \
     openssh-client \
     python3-pip \
-    ipython
+    ipython \
+    nano
     
 RUN pip install --upgrade pip
 RUN pip install cassandra-driver
@@ -23,5 +24,5 @@ RUN pip install protobuf
 
 # set up working directory
 #---------------------------------------------------
-RUN mkdir /home/craydata
-WORKDIR /home/craydata
+RUN mkdir /home/crayfis
+WORKDIR /home/crayfis
