@@ -40,8 +40,8 @@ do
 	        exit_code=$?
 	        echo
             if [[ $exit_code != 0 ]]; then break; fi
-            data_map="${HOST_DATA}:/data/daq.crayfis.io/raw
-            src_map="${HOST_SRC}:/home/${HOST_NAME}/src
+            data_map="${HOST_DATA}:/data/daq.crayfis.io/raw"
+            src_map="${HOST_SRC}:/home/${HOST_NAME}/src"
             ingested_map="${HOST_SRC}/ingested"
 	        cmd="docker run --rm --name ${HOST_NAME} -v ${data_map} -v ${src_map} -v ${ingested_map} --link ${CLUSTER_NAME}:cassandra -it ${HOST_IMAGE}"
 	        echo $cmd
