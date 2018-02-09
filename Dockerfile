@@ -26,5 +26,5 @@ RUN pip install protobuf
 
 # set up working directory
 #---------------------------------------------------
-RUN mkdir /home/crayfis
-WORKDIR /home/crayfis
+RUN mkdir /home/craydata
+WORKDIR /home/craydata

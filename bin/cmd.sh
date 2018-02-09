@@ -10,7 +10,7 @@ HOST_DATA="/data/daq.crayfis.io/raw"
 HOST_SRC="$PWD/src"
 
 PS3="Select Command: "
-commands=("Boot up ${CASSANDRA_IMAGE}" "Update Cassandra" "Log into ${CLUSTER_NAME}" "Cleanup docker images")
+commands=("Boot up ${CASSANDRA_IMAGE}" "Build and Boot ${HOST_IMAGE} (for debug)" "Update Cassandra" "Log into ${CLUSTER_NAME}" "Cleanup docker images")
 select opt in "${commands[@]}"
 do
     case $opt in
@@ -32,20 +32,20 @@ do
             echo
             break
             ;;
-#        "Build and Boot ${HOST_IMAGE}")
-#	        cmd="docker build -t ${HOST_IMAGE} .."
-#	        echo
-#	        echo $cmd
-#	        eval $cmd
-#	        exit_code=$?
-#	        echo
- #           if [[ $exit_code != 0 ]]; then break; fi
-#	        cmd="docker run --rm --name ${HOST_NAME} -v ${HOST_DATA}:/data/daq.crayfis.io/raw -v ${HOST_SRC}:/home/${HOST_NAME}/src --link ${CLUSTER_NAME}:cassandra -it ${HOST_IMAGE}"
-#	        echo $cmd
-#	        eval $cmd
-#	        echo
-#	        break
- #           ;;
+        "Build and Boot ${HOST_IMAGE} (for debug)")
+	        cmd="docker build -t ${HOST_IMAGE} ."
+	        echo
+	        echo $cmd
+	        eval $cmd
+	        exit_code=$?
+	        echo
+            if [[ $exit_code != 0 ]]; then break; fi
+	        cmd="docker run --rm --name ${HOST_NAME} -v ${HOST_DATA}:/data/daq.crayfis.io/raw -v ${HOST_SRC}:/home/${HOST_NAME}/src --link ${CLUSTER_NAME}:cassandra -it ${HOST_IMAGE}"
+	        echo $cmd
+            eval $cmd
+	        echo
+	        break
+            ;;
         "Log into ${CLUSTER_NAME}")
 	        cmd="docker run -it --link ${CLUSTER_NAME}:cassandra --rm cassandra cqlsh cassandra"
 	        echo 
