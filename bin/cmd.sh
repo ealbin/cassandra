@@ -17,7 +17,7 @@ do
         "Boot up ${CASSANDRA_IMAGE}")
             check=`docker ps | egrep -c "$CLUSTER_NAME"`
             if [ $check -gt 0 ]; then echo "instance of $CLUSTER_NAME already running..."; break; fi
-	        cmd="docker run --name ${CLUSTER_NAME} -v ${HOST_CASSANDRA_DIR}:/var/lib/cassandra -d ${CASSANDRA_IMAGE}"
+	        cmd="docker run --rm --name ${CLUSTER_NAME} -v ${HOST_CASSANDRA_DIR}:/var/lib/cassandra -d ${CASSANDRA_IMAGE}"
 	        echo
 	        echo $cmd
 	        eval $cmd
@@ -40,7 +40,10 @@ do
 	        exit_code=$?
 	        echo
             if [[ $exit_code != 0 ]]; then break; fi
-	        cmd="docker run --rm --name ${HOST_NAME} -v ${HOST_DATA}:/data/daq.crayfis.io/raw -v ${HOST_SRC}:/home/${HOST_NAME}/src --link ${CLUSTER_NAME}:cassandra -it ${HOST_IMAGE}"
+            data_map="${HOST_DATA}:/data/daq.crayfis.io/raw
+            src_map="${HOST_SRC}:/home/${HOST_NAME}/src
+            ingested_map="${HOST_SRC}/ingested"
+	        cmd="docker run --rm --name ${HOST_NAME} -v ${data_map} -v ${src_map} -v ${ingested_map} --link ${CLUSTER_NAME}:cassandra -it ${HOST_IMAGE}"
 	        echo $cmd
             eval $cmd
 	        echo
