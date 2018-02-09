@@ -7,9 +7,9 @@
 
     http://www.docker.com
 
-3) Use cmd.sh as needed
+3) Use bin/cmd.sh as needed
 
-    bash cmd.sh
+    bash bin/cmd.sh
     
 
 
