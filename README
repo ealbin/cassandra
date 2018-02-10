@@ -9,7 +9,8 @@
 
 3a) Use bin/cmd.sh as needed (e.g. boot up/update cassandra)
 
-    bash bin/cmd.sh
+    bash bin/cmd.sh  (prompted for action)
+    bash bin/cmd.sh update  (bypass prompt and go into update mode)
 
 3b) Or use the src/ingest python module directly 
     
