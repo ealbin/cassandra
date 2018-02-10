@@ -51,20 +51,20 @@ for i, file in enumerate(tarfiles):
         n_skipped += 1.
         continue
 
-    if (n_completed > 0) and ( (i+1.)/n > (target/100.) or n_completed < 48 ):
-        total_minutes = ( time.time() - absolute_start ) / 60.
-        rate = n_completed / elapsed # files / second
-        hours_remaining = (n - n_skipped - n_completed) / rate / 3600.
-        print '\r>> working... {0}%, current file: {1}, ave time/file: {2:.3} s, elapsed time: {3:.3} m, eta: {4:.5} hrs        '.format( target, file, 1./rate, total_minutes, hours_remaining),
-        sys.stdout.flush()
-        if (i+1.)/n > (target/100.):
-            if target < 1:
-                target += .1
-            elif target < 10:
-                target += 1.
-            elif target < 90:
-                target += 5.
-            elif target < 99:
-                target += 1.
-            else:
-                target += .1
+#    if (n_completed > 0) and ( (i+1.)/n > (target/100.) or n_completed < 48 ):
+    total_minutes = ( time.time() - absolute_start ) / 60.
+    rate = n_completed / elapsed # files / second
+    hours_remaining = (n - n_skipped - n_completed) / rate / 3600.
+    print '\r>> working... {0}%, current file: {1}, ave time/file: {2:.3} s, elapsed time: {3:.3} m, eta: {4:.5} hrs        '.format( target, file, 1./rate, total_minutes, hours_remaining),
+    sys.stdout.flush()
+    if (i+1.)/n > (target/100.):
+        if target < 1:
+            target += .1
+        elif target < 10:
+            target += 1.
+        elif target < 90:
+            target += 5.
+        elif target < 99:
+            target += 1.
+        else:
+            target += .1
