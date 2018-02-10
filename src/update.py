@@ -1,3 +1,5 @@
+#!/bin/env python
+
 # updates cassandra with current data
 # keeps track of data that's been processed in the `ingested` directory
 
