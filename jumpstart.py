@@ -39,12 +39,12 @@ columns.keys()
 # (4) submit CQL searches to the database
 # ref: https://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlCommandsTOC.html
 # e.g. get all events and all info 
-results = session.execute( 'select * in raw.events' )
+results = session.execute( 'select * from raw.events' )
 while results.has_more_pages:
     for event in results.current_rows():
         pass # do whatever
     results.fetch_next_page()
 
 # e.g. get only device_id and pixels
-results = session.execute( 'select device_id, pixels in raw.events' )
+results = session.execute( 'select device_id, pixels from raw.events' )
 
