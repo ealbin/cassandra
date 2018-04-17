@@ -58,7 +58,7 @@ do
             check=`docker ps | egrep -c "${CLUSTER_NAME}"`
             if [ $check -gt 0 ]; then echo "instance of ${CLUSTER_NAME} already running..."; break; fi
             eval "docker rm ${CLUSTER_NAME}"
-	        cmd="docker run --rm --name ${CLUSTER_NAME} -v ${HOST_CASSANDRA_DIR}:/var/lib/cassandra -d ${CASSANDRA_IMAGE}"
+	        cmd="docker run --rm --name ${CLUSTER_NAME} -v $PWD/config/cassandra:/etc/cassandra -v ${HOST_CASSANDRA_DIR}:/var/lib/cassandra -d ${CASSANDRA_IMAGE}"
 	        echo
 	        echo $cmd
 	        eval $cmd
@@ -101,7 +101,7 @@ do
 	        ;;
 
          ${prompt[4]}) # bash cassandra
-	        cmd="docker run -it --link ${CLUSTER_NAME}:cassandra --rm cassandra bash"
+	        cmd="docker run -it -v $PWD:/home -v $PWD/config/cassandra:/etc/cassandra --link ${CLUSTER_NAME}:cassandra --rm cassandra bash"
 	        echo
 	        echo $cmd
 	        eval $cmd
