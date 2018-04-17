@@ -42,12 +42,19 @@ if [ $# -eq 1 ]; then
     fi
 fi
 
+prompt[0]="Boot up ${CASSANDRA_IMAGE}"
+prompt[1]="Build and Boot ${HOST_IMAGE} (debug)"
+prompt[2]="Update Cassandra with latest data"
+prompt[3]="csql> ${CLUSTER_NAME}"
+prompt[4]="bash ${CLUSTER_NAME}"
+prompt[5]="kill all"
+prompt[6]="Cleanup docker images"
+prompt[7]="Make environment"
+
 PS3="Select Command: "
-commands=("Boot up ${CASSANDRA_IMAGE}" "Build and Boot ${HOST_IMAGE} (for debug)" "Update Cassandra" "Log into ${CLUSTER_NAME}" "Cleanup docker images")
-select opt in "${commands[@]}"
+select opt in "${prompt[@]}"
 do
-    case $opt in
-        "Boot up ${CASSANDRA_IMAGE}")
+    case $opt in ${prompt[0]}) # boot up cassandra image
             check=`docker ps | egrep -c "${CLUSTER_NAME}"`
             if [ $check -gt 0 ]; then echo "instance of ${CLUSTER_NAME} already running..."; break; fi
             eval "docker rm ${CLUSTER_NAME}"
@@ -59,7 +66,7 @@ do
 	        break
             ;;
 
-        "Build and Boot ${HOST_IMAGE} (for debug)")
+        ${prompt[1]}) # build and boot host image for debug
             check=`docker ps | egrep -c "${HOST_NAME}"`
             if [ $check -gt 0 ]; then docker kill ${HOST_NAME}; docker rm ${HOST_NAME}; fi
 	        cmd="docker build -t ${HOST_IMAGE} ."
@@ -79,23 +86,54 @@ do
 	        break
             ;;
 
-         "Update Cassandra")
+         ${prompt[2]}) # update cassandra with latest data
             update
 	        break
             ;;
 
-        "Log into ${CLUSTER_NAME}")
+         ${prompt[3]}) # csql cassandra
 	        cmd="docker run -it --link ${CLUSTER_NAME}:cassandra --rm cassandra cqlsh cassandra"
-	        echo 
+	        echo
 	        echo $cmd
 	        eval $cmd
 	        echo
 	        break
 	        ;;
-	    "Cleanup docker images")
+
+         ${prompt[4]}) # bash cassandra
+	        cmd="docker run -it --link ${CLUSTER_NAME}:cassandra --rm cassandra bash"
+	        echo
+	        echo $cmd
+	        eval $cmd
+	        echo
+            break
+            ;;
+
+         ${prompt[5]}) # kill all
+            check=`docker ps | egrep -c "${CLUSTER_NAME}"`
+            if [ $check -gt 0 ]; then docker kill $CLUSTER_NAME; fi
+
+            check=`docker ps | egrep -c "${HOST_NAME}"`
+            if [ $check -gt 0 ]; then docker kill $HOST_NAME; fi
+            break
+            ;;
+
+	     ${prompt[6]}) # cleanup docker images
     	    for id in `docker images | egrep "^<none>" | awk '{print $3}'`; do docker rmi $id; done
     	    break
     	    ;;
+
+         ${prompt[7]}) # make environment
+            export CASSANDRA_IMAGE=$CASSANDRA_IMAGE
+            export CLUSTER_NAME=$CLUSTER_NAME
+            export HOST_CASSANDRA_DIR=$HOST_CASSANDRA_DIR
+            export HOST_IMAGE=$HOST_IMAGE
+            export HOST_NAME=$HOST_NAME
+            export HOST_DATA=$HOST_DATA
+            export HOST_SRC=$HOST_SRC
+            break
+            ;;
+
         *) echo invalid option;;
     esac
 done
