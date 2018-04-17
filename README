@@ -14,7 +14,6 @@
 
 3b) Or use the src/ingest python module directly 
     
-
-
 (reference: http://hub.docker.com/_/cassandra )
-    
+
+4) check out jumpstart.py for accessing data via python    
