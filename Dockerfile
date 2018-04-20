@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip install --upgrade pip
 RUN pip install cassandra-driver
 RUN pip install protobuf
+RUN pip install docker
 
 
 # set up working directory
