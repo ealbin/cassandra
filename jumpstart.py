@@ -1,6 +1,8 @@
 #!/bin/env python
 
 # an example to accessing Cassandra from python
+# you can run this file e.g. python jumpstart.py
+# check out the TL;DR at the bottom..
 #-----------------------------------------------
 
 # (1) get the IP address of the Cassandra server
@@ -61,4 +63,13 @@ from cassandra.cluster import Cluster
 cluster = Cluster([ipaddr])
 session = cluster.connect()
 #...
+meta = cluster.metadata
+print 'keyspaces:  {0}'.format(meta.keyspaces.keys())
+print 'raw tables: {0}'.format(meta.keyspaces['raw'].tables.keys())
+print
+print 'raw.events columns: {0}'.format(session.execute('select * from raw.events').column_names)
+print
+print 'device_ids in events: {0}'.format([ row.device_id for row in session.execute('select distinct device_id from raw.events').current_rows ])
+#...
 cluster.shutdown()
+
